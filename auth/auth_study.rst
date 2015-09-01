@@ -28,6 +28,9 @@ Calling name(s)
 
 Surname
  3 stakeholders considered name field as mandatory. For 2 it was “nice to have”.
+ 
+Birth year
+ Additional proposal. 
 
 
 Email
