@@ -4,6 +4,9 @@ Glossary
 
 .. glossary::
 
+  this repo
+    https://github.com/educloudalliance/eca-docs
+
   API
     Application Programming Interface.
 
