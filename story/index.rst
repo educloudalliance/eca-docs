@@ -4,9 +4,9 @@ Stories
 
 .. toctree::
 
-  story/sso
-  story/learning_materials
-  story/procurement
-  story/curriculum
-  story/feedback_loops
+  sso
+  learning_materials
+  procurement
+  curriculum
+  feedback_loops
 
