@@ -16,7 +16,7 @@ The goals and principles of the standard are:
 * Make it possible for every service to connect to all other services in the ecosystem
 * Create a standard which as many as possible is believing.
 
-And some open questions:
+Some open questions:
 
 * What is the top level goal why :term:`ECA` is creating a standard?
 * What it means to create a standard?
@@ -29,17 +29,40 @@ And some open questions:
 
 __ https://www.ietf.org/rfc/rfc2119.txt
 
+
 Stories
 =======
 
-The standard is modeled based on the first principle about the user coming first.
 A story from the actors point of view explains how the standard is affecting
 the life of the actor, what benefits there are, and how the standard is affecting
 the user interface and user experience.
 
-For user the whole system should look and feel coherent and there should not be
-inconsistencies or places where the user does not know where in the overall
+For the actor the whole system should look and feel coherent and there should not be
+inconsistencies or places where the actor does not know where in the overall
 system she currently is.
+
+Stories define the goals of other technical choices and specifications.
+It can be defined that some use case can be implemented any way possible,
+as long as it fulfills the story.
+
+
+:doc:`Single Sign-on <story/sso>`
+  Authentication and identification of the user should happen only once when she
+  begins the session. Moving between services should be seamless.
+
+:doc:`Using learning materials <story/learning_materials>`
+  User must be able to use any material the way she wants.
+
+:doc:`Procurement and license management <story/procurement>`
+  Procurement of material and services should be easy and
+  fair to everybody.
+
+:doc:`Curriculum <story/curriculum>`
+  User should always know that what she is doing is in line with the curriculum.
+
+:doc:`Analytics and feedback loops <story/feedback_loops>`
+  User should see her progress in real time and it must be possible to
+  build feedback loops in all levels of the system.
 
 
 Services
@@ -57,28 +80,32 @@ not designed as such.
 User authentication, identification and profile data
 ----------------------------------------------------
 
-All other services need to know something about the user. Different services
+All services need to know something about the user. Different services
 need different data about the user, but all of them need to authenticate and/or
-identify the user.
+identify the user in some way.
 
-:doc:`Auth Source <auth/index>`
+These are the services which together form the basis of :doc:`authentication and
+identification <auth/index>` of users.
+
+:doc:`Auth Source <auth/source>`
   Authenticates the user when the user wants to open a session in one of the
   services. Auth Sources are handled by the Auth Proxy.
 
-:doc:`Auth Proxy <auth/index>`
+:doc:`Auth Proxy <auth/proxy/index>`
   Common interface for services to use different Auth Sources.
   Provides single sign-on for services.
 
-:doc:`Connector <connector/index>`
+:doc:`Connector <auth/connector/index>`
   Connects user authentication source and user identity together.
   This makes it possible for the user to identify with multiple
   authentication sources and still have only one identity.
   Only the authentication source knows the credentials for the user.
 
-:doc:`Data <data/index>`
+:doc:`Data <auth/data/index>`
   Common source of user data to all other services.
   Mainly used by the connector to query users and store
   the connection between authentication source and user identity.
+
 
 Learning material
 -----------------
@@ -105,11 +132,11 @@ authentication attributes.
 
 .. image:: bus.png
 
-:doc:`Auth IF <auth/interface>`
+:doc:`Auth IF <auth/proxy/interface>`
   User authentication is done by common interface.
   The auth system has :term:`SP` and :term:`IdP` components.
 
-:doc:`Data IF <data/interface>`
+:doc:`Data IF <auth/data/interface>`
   Data Service provides an interface to query for user data from Data Providers.
 
 :doc:`LMS IF <bazaar/interface>`
@@ -126,9 +153,14 @@ The standard would not be complete without defining how the system as a whole
 is working and how the reference implementation is built. The production
 system can be different.
 
+
 Contributions
 =============
 
+If you want to contribute to ECA put your contributions in the
+open and begin the discussion how your contribution could benefit
+ECA and everybody else.
 
 Read more about :doc:`contributions <contributions>`.
+
 
