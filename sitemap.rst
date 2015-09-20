@@ -8,6 +8,9 @@ Site Map
  story/index
  auth/index
  bazaar/index
- glossary
+ lms/index
+ cms/index
+ recipes/index
  contributions
+ glossary
 

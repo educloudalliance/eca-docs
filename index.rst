@@ -2,28 +2,88 @@
 Educloud Alliance Technical Documentation
 *****************************************
 
-Educloud Alliance is creating a standard which defines how different service providers
-can communicate and share information.
+Educloud Alliance is creating and maintaining a standard which defines
+how it is possible to build a ecosystem of users, developers and service providers,
+which brings together learning management systems, content management systems,
+content producers, administrative systems and all other services to make it possible for
+everybody to freely discover, choose, buy, compare and use everything.
 
-The goals and principles of the standard are:
 
-* Always think about the user first. The standard must be making their life easier.
-* Create documented and open interfaces.
-* Use as much existing documentation, interfaces, and field tested technology as possible.
-* All and everything in :term:`ECA` must be open and free for everybody to use.
-* Create reference implementation of the standard.
-* Each service can be maintained by different entity and they can have different goals
-* Make it possible for every service to connect to all other services in the ecosystem
-* Create a standard which as many as possible is believing.
+Principles
+==========
 
-Some open questions:
+Principles are the key guidance when contributing and defining the standard.
+By following the principles one can help the standard to meet the goals set.
 
-* What is the top level goal why :term:`ECA` is creating a standard?
-* What it means to create a standard?
-* What we try to standardize?
-* Who is the target audience for the standard?
+User point of view.
+ The main principle of the standard is to recognize and appreciate the goals of users.
+ By understanding the motivations and rationales behind users’ actions it is possible
+ to build environments that fulfill users’ needs and bring joy of use to their daily life.
+
+Everything is open and free.
+ Everything is open and free for everyone to use everywhere.
+
+Interoperability.
+ Not only people, but also services can discuss with each other,
+ change information and thus build knowledge.
+ Make it possible for every other service in the ecosystem to
+ connect with your service. And bring more value by connecting your
+ service to other services.
+
+Be committed.
+ Ecosystem includes various actors with freedom to build and maintain their
+ own services for their own purposes. With this freedom comes
+ the responsibility to be committed to follow the ECA standard.
+
+Excellence.
+ Create and contribute to a believable and viable standard which is easy to understand,
+ implement and it convinces as many people as possible.
+
+Use existing.
+ Use as much as possible existing documentation, interfaces,
+ and field tested technologies.
+ Make your own contribution reusable.
+
+Offer reference implementation.
+ Reference implementation with written documentation is the ultimate proof
+ that the idea works and is possible to implement.
+
+
+Structure of documentation
+==========================
+
+Documentation consists of four levels presented in the image:
+Stories, Services, Interfaces and Infrastructure.
 
 .. image:: standard.png
+
+Stories are the highest level of documentation.
+Stories do not describe any technical solution, but focus on explaining the rationale.
+Why something needs to be done, and how it should work from the users’ perspective.
+A story does not describe a service as such, but the user, the usage environment and the usage flow,
+how the services need to connect to other services.
+
+Services documentation tells what functionality is expected from a service,
+and how it relates to the stories.
+There is also documentation how services are working together.
+Services adhere to common user experience guidelines which ensure that the user
+feels safe and knows the path back home.
+
+A reference implementation is included for testing the interfaces
+and related services built according to the documentation.
+This reference implementation is part of standard’s documentation,
+and available for service providers.
+ECA standard does not require that a service is built according to the reference implementation.
+But, as the reference implementation is open source code with free-to-use license,
+it can be utilized as the basis of the services.
+
+Interfaces are there for creating pleasing user experiences when several services are
+needed to meet the goals of the user. Interfaces enable service-to-service communication
+and data sharing, which helps creating seamless experiences to the user.
+
+Infrastructure documentation is the lowest level of documentation describing the whole service
+architecture of ECA standard.
+It also contains the best practices guidance for hosting the services and the system.
 
 `RFC 2119`__ is used to define common vocabulary for requirements.
 
@@ -33,18 +93,38 @@ __ https://www.ietf.org/rfc/rfc2119.txt
 Stories
 =======
 
-A story from the actors point of view explains how the standard is affecting
-the life of the actor, what benefits there are, and how the standard is affecting
-the user interface and user experience.
+A story shows a snapshot of user’s life with the system.
+It gives insight into what kind of people will use the system
+e.g. what kind of teacher, student or other person from the school world.
+And why they are using it. The key is to know your users!
 
-For the actor the whole system should look and feel coherent and there should not be
+The story tells the user’s problem or the goal, which the user wants to achieve.
+From the story, reader gets an idea of how the system can help the user
+and what kind of features there are.
+But it does not specifically tell what technology is used.
+
+The story takes place in the right context i.e. for example
+in an environment such as school class, home office, or the bus,
+and describes the tools and capabilities e.g. tablet, mobile phone,
+limited network access. If relevant to the system,
+story may also tell about social context i.e. situations and communication
+of people with each other, or with some other systems.
+
+The context of use, characteristics of the user and the goals help to
+identify design requirements for the service.
+From the story you can see, what other services you may need in order
+to fulfill user’s needs properly.
+
+Stories do not tell you what kind of user interface you should build,
+or what kind of technical solutions should be used, as it leaves them open.
+Only interest is on whether the story is met with the final product or not,
+regardless of means.
+
+For the user the whole system should look and feel coherent and there should not be
 inconsistencies or places where the actor does not know where in the overall
 system she currently is.
 
-Stories define the goals of other technical choices and specifications.
-It can be defined that some use case can be implemented any way possible,
-as long as it fulfills the story.
-
+Following stories are identified to be the core stories of ECA’s standard.
 
 :doc:`Single Sign-on <story/sso>`
   Authentication and identification of the user should happen only once when she
@@ -75,11 +155,16 @@ implementation which shows in practice how the standard is meant to be working.
 The reference implementation is not meant to be production system and it is
 not designed as such.
 
+The standard is defined so that it is possible to have multiple instances of all services.
+It is up to the production system to define how many instances of
+different services are available to the users.
+
 .. image:: services.png
 
 User authentication, identification and profile data
 ----------------------------------------------------
 
+Authentication is considered separate from other services.
 All services need to know something about the user. Different services
 need different data about the user, but all of them need to authenticate and/or
 identify the user in some way.
@@ -87,13 +172,13 @@ identify the user in some way.
 These are the services which together form the basis of :doc:`authentication and
 identification <auth/index>` of users.
 
-:doc:`Auth Source <auth/source>`
-  Authenticates the user when the user wants to open a session in one of the
-  services. Auth Sources are handled by the Auth Proxy.
-
 :doc:`Auth Proxy <auth/proxy/index>`
   Common interface for services to use different Auth Sources.
   Provides single sign-on for services.
+
+:doc:`Auth Source <auth/source>`
+  Authenticates the user when the user wants to open a session in one of the
+  services. Auth Sources are handled by the Auth Proxy.
 
 :doc:`Connector <auth/connector/index>`
   Connects user authentication source and user identity together.
@@ -110,10 +195,22 @@ identification <auth/index>` of users.
 Learning material
 -----------------
 
+Handling learning material is focused in three key service types.
 Learning material is produced by the :term:`CMS` and used in the :term:`LMS`.
+Bazaar is mediating between them and allowing many-to-many connections
+freely between them.
 
 :doc:`Bazaar <bazaar/index>`
   Service which lets the user to browse and buy material from :term:`CMS` to :term:`LMS`.
+
+:doc:`Recipes <recipes/index>`
+  Service which builds collections of learning materials.
+
+:doc:`Learning management system <lms/index>`
+  Service which consumes the content produced by the :doc:`Content management systems <cms/index>`.
+
+:doc:`Content management system <cms/index>`
+  Service which produces content in some form.
 
 
 Interfaces
@@ -123,9 +220,6 @@ All communication between services must be happen thru interfaces which are
 defined in the standard. Interfaces should be based on existing technology
 which is already widely used. Interfaces should be easy to understand and
 implement by all parties.
-
-* What interfaces are needed for achieving the goals and the standard?
-* What level are the interfaces described?
 
 :doc:`Authentication attributes study <auth/auth_study>`, and first proposal for
 authentication attributes.
@@ -140,10 +234,10 @@ authentication attributes.
   Data Service provides an interface to query for user data from Data Providers.
 
 :doc:`LMS IF <bazaar/interface>`
-  Between :term:`Bazaar` and :term:`LMS`.
+  Between :doc:`Bazaar <bazaar/index>` and :doc:`LMS <lms/index>`.
 
 :doc:`CMS IF <bazaar/interface>`
-  Between term:`Bazaar` and :term:`CMS`.
+  Between :doc:`Bazaar <bazaar/index>` and :doc:`CMS <cms/index>`.
 
 
 Infrastructure
