@@ -1,6 +1,8 @@
 
 # Educloud Alliance Technical Documentation
 
+[![Join the chat at https://gitter.im/educloudalliance/eca-docs](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/educloudalliance/eca-docs?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 
 Educloud Alliance is creating a standard architecture how different service providers
 can communicate and share information. The system consists of mainly interface
