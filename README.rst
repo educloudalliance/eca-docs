@@ -1,26 +1,35 @@
 
-Educloud Alliance Technical Documentation
-*****************************************
+Educloud Alliance Documentation
+*******************************
 
 |gitter| |docs|
 
 
-Educloud Alliance is creating a standard architecture how different service providers
-can communicate and share information. The system consists of mainly interface
-descriptions, protocols and overall description how the highlevel system works.
+The repository contains:
 
-The standard is accompanied by reference implementation which shows in
-practice how the system is meant to be working. The reference implementation
-is not meant to be production system and it is not designed to such.
+* The Educloud Alliance technical documentation
+* The Educloud Alliance standard
+* Contribution processes
 
-This repository is the place for communication about the
-Educloud Alliance technical documentation.
+
+Repositories
+============
+
+Auth Connector service
+  https://github.com/educloudalliance/eca-auth-connector
+
+Auth Data service
+  https://github.com/educloudalliance/eca-auth-data
+
+Auth Proxy service
+  https://github.com/educloudalliance/eca-auth-proxy
 
 
 Tools
 =====
 
 The documentation uses http://sphinx-doc.org/
+
 
 Contributions
 =============
