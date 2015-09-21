@@ -19,13 +19,11 @@ mean pretty much anything. It is better to ask than not to.
 Documentation
 =============
 
-:term:`this repo` is the place for communication about the
-Educloud technical documentation.
-
 If you want to contribute documentation you should submit pull requests.
 
-The master branch in this repository is the latest and greatest
+The master branch in :term:`this repo` is the latest and greatest
 consensus. All changes to the master branch happen from pull requests.
+
 All pull requests are approved by the ECA chief architect.
 If the change is fundamentally changing the documentation then
 the chief architect raises the issue to the board. Board then decides
