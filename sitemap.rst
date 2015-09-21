@@ -5,11 +5,12 @@ Site Map
 .. toctree::
 
  index
- architecture
+ story/index
  auth/index
- connector/index
- data/index
  bazaar/index
- glossary
+ lms/index
+ cms/index
+ recipes/index
  contributions
+ glossary
 
