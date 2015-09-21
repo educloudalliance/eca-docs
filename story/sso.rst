@@ -16,3 +16,7 @@ As the user experience must be coherent between services user should have
 a feeling she is inside one system.
 
 
+As the Auth Data service tries to model the real situation where one user can be
+teacher and student in different shools this has to be here.
+It is also possible to decide that only one role object per user
+is acceptable when the data is imported to the database.

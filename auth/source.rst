@@ -3,7 +3,5 @@
 Auth source
 ***********
 
-* What is auth source
-* Who can be auth source
-* What is the role of the auth source
+Auth Source must be the only place where authentication and credential check is done.
 

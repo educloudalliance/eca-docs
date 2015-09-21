@@ -48,6 +48,11 @@ Offer reference implementation.
  Reference implementation with written documentation is the ultimate proof
  that the idea works and is possible to implement.
 
+`RFC 2119`__ is used to define common vocabulary for requirements in
+the documentation.
+
+__ https://www.ietf.org/rfc/rfc2119.txt
+
 
 Structure of documentation
 ==========================
@@ -60,22 +65,19 @@ Stories, Services, Interfaces and Infrastructure.
 Stories are the highest level of documentation.
 Stories do not describe any technical solution, but focus on explaining the rationale.
 Why something needs to be done, and how it should work from the users’ perspective.
-A story does not describe a service as such, but the user, the usage environment and the usage flow,
-how the services need to connect to other services.
+A story does not describe a service as such, but the user, the usage environment,
+and the usage flow.
 
 Services documentation tells what functionality is expected from a service,
 and how it relates to the stories.
-There is also documentation how services are working together.
-Services adhere to common user experience guidelines which ensure that the user
-feels safe and knows the path back home.
+Services must work together to form functionality described in the stories.
+Services should adhere to common user experience guidelines which ensure that the user
+feels safe and knows the path between services.
 
-A reference implementation is included for testing the interfaces
+A reference implementation should be included for testing the interfaces
 and related services built according to the documentation.
 This reference implementation is part of standard’s documentation,
-and available for service providers.
-ECA standard does not require that a service is built according to the reference implementation.
-But, as the reference implementation is open source code with free-to-use license,
-it can be utilized as the basis of the services.
+and available for all parties.
 
 Interfaces are there for creating pleasing user experiences when several services are
 needed to meet the goals of the user. Interfaces enable service-to-service communication
@@ -84,10 +86,6 @@ and data sharing, which helps creating seamless experiences to the user.
 Infrastructure documentation is the lowest level of documentation describing the whole service
 architecture of ECA standard.
 It also contains the best practices guidance for hosting the services and the system.
-
-`RFC 2119`__ is used to define common vocabulary for requirements.
-
-__ https://www.ietf.org/rfc/rfc2119.txt
 
 
 Stories
@@ -150,12 +148,14 @@ Services
 
 The standard is based on a service oriented architecture where functionality
 is split to services. The services defined in the standard are implementing
-the stories defined in the standard. The standard is accompanied by reference
-implementation which shows in practice how the standard is meant to be working.
+the stories defined in the standard.
+
+The standard must be accompanied by reference implementation which shows in practice
+how the standard is meant to be working.
 The reference implementation is not meant to be production system and it is
 not designed as such.
 
-The standard is defined so that it is possible to have multiple instances of all services.
+It must be possible to have multiple instances of all services when in production.
 It is up to the production system to define how many instances of
 different services are available to the users.
 
@@ -216,15 +216,18 @@ freely between them.
 Interfaces
 ==========
 
-All communication between services must be happen thru interfaces which are
-defined in the standard. Interfaces should be based on existing technology
-which is already widely used. Interfaces should be easy to understand and
-implement by all parties.
-
-:doc:`Authentication attributes study <auth/auth_study>`, and first proposal for
-authentication attributes.
+The interfaces can be thought of as a highway of information which is flowing between
+services.
 
 .. image:: bus.png
+
+Services are publishing interfaces for other services to use.
+Interface definitions must be open to everybody, but the use and authorization
+of interface access is defined runtime by the services.
+
+Services may have more interfaces than what is defined in the standard.
+These interfaces are not bound by the standard.
+
 
 :doc:`Auth IF <auth/proxy/interface>`
   User authentication is done by common interface.
