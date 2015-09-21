@@ -2,116 +2,262 @@
 Educloud Alliance Technical Documentation
 *****************************************
 
-Summary of
-
-* why
-* what
-* how
-
-Educloud Alliance is creating a standard architecture how different service providers
-can communicate and share information. The system consists of mainly interface
-descriptions, protocols and overall description how the highlevel system works.
-
-The standard is accompanied by reference implementation which shows in
-practice how the system is meant to be working. The reference implementation
-is not meant to be production system and it is not designed to such.
+Educloud Alliance is creating and maintaining a standard which defines
+how it is possible to build a ecosystem of users, developers and service providers,
+which brings together learning management systems, content management systems,
+content producers, administrative systems and all other services to make it possible for
+everybody to freely discover, choose, buy, compare and use everything.
 
 
-Goals
-=====
+Principles
+==========
 
-* Always think about the user first. User is the student, pupil, learner. Everything must be making their life easier.
-* Create documented and open interfaces to key infrastructure.
-* Use as much existing documentation, interfaces, and field tested technology as possible.
-* All and everything in :term:`ECA` must be open and free for everybody to use.
-* Create reference implementation of all documentation.
-* Make it possible for every service to connect to all other services in the ecosystem
-* Create a standard which as many as possible is believing.
+Principles are the key guidance when contributing and defining the standard.
+By following the principles one can help the standard to meet the goals set.
 
-And some questions:
+User point of view.
+ The main principle of the standard is to recognize and appreciate the goals of users.
+ By understanding the motivations and rationales behind users’ actions it is possible
+ to build environments that fulfill users’ needs and bring joy of use to their daily life.
 
-* What is the top level goal why :term:`ECA` is creating a standard?
-* What it means to create a standard?
-* What we try to standardize?
-* Who is the target audience for the standard?
+Everything is open and free.
+ Everything is open and free for everyone to use everywhere.
 
-Architecture
-============
+Interoperability.
+ Not only people, but also services can discuss with each other,
+ change information and thus build knowledge.
+ Make it possible for every other service in the ecosystem to
+ connect with your service. And bring more value by connecting your
+ service to other services.
 
-* What components the architecture has?
-* Which level they are documented?
+Be committed.
+ Ecosystem includes various actors with freedom to build and maintain their
+ own services for their own purposes. With this freedom comes
+ the responsibility to be committed to follow the ECA standard.
 
-<Here is an image>
+Excellence.
+ Create and contribute to a believable and viable standard which is easy to understand,
+ implement and it convinces as many people as possible.
 
-ECA is using a service oriented architecture where each service can be maintained
-separatedly. Each service does only one thing.
+Use existing.
+ Use as much as possible existing documentation, interfaces,
+ and field tested technologies.
+ Make your own contribution reusable.
 
-Services can be grouped to the following groups:
+Offer reference implementation.
+ Reference implementation with written documentation is the ultimate proof
+ that the idea works and is possible to implement.
+
+`RFC 2119`__ is used to define common vocabulary for requirements in
+the documentation.
+
+__ https://www.ietf.org/rfc/rfc2119.txt
+
+
+Structure of documentation
+==========================
+
+Documentation consists of four levels presented in the image:
+Stories, Services, Interfaces and Infrastructure.
+
+.. image:: standard.png
+
+Stories are the highest level of documentation.
+Stories do not describe any technical solution, but focus on explaining the rationale.
+Why something needs to be done, and how it should work from the users’ perspective.
+A story does not describe a service as such, but the user, the usage environment,
+and the usage flow.
+
+Services documentation tells what functionality is expected from a service,
+and how it relates to the stories.
+Services must work together to form functionality described in the stories.
+Services should adhere to common user experience guidelines which ensure that the user
+feels safe and knows the path between services.
+
+A reference implementation should be included for testing the interfaces
+and related services built according to the documentation.
+This reference implementation is part of standard’s documentation,
+and available for all parties.
+
+Interfaces are there for creating pleasing user experiences when several services are
+needed to meet the goals of the user. Interfaces enable service-to-service communication
+and data sharing, which helps creating seamless experiences to the user.
+
+Infrastructure documentation is the lowest level of documentation describing the whole service
+architecture of ECA standard.
+It also contains the best practices guidance for hosting the services and the system.
+
+
+Stories
+=======
+
+A story shows a snapshot of user’s life with the system.
+It gives insight into what kind of people will use the system
+e.g. what kind of teacher, student or other person from the school world.
+And why they are using it. The key is to know your users!
+
+The story tells the user’s problem or the goal, which the user wants to achieve.
+From the story, reader gets an idea of how the system can help the user
+and what kind of features there are.
+But it does not specifically tell what technology is used.
+
+The story takes place in the right context i.e. for example
+in an environment such as school class, home office, or the bus,
+and describes the tools and capabilities e.g. tablet, mobile phone,
+limited network access. If relevant to the system,
+story may also tell about social context i.e. situations and communication
+of people with each other, or with some other systems.
+
+The context of use, characteristics of the user and the goals help to
+identify design requirements for the service.
+From the story you can see, what other services you may need in order
+to fulfill user’s needs properly.
+
+Stories do not tell you what kind of user interface you should build,
+or what kind of technical solutions should be used, as it leaves them open.
+Only interest is on whether the story is met with the final product or not,
+regardless of means.
+
+For the user the whole system should look and feel coherent and there should not be
+inconsistencies or places where the actor does not know where in the overall
+system she currently is.
+
+Following stories are identified to be the core stories of ECA’s standard.
+
+:doc:`Single Sign-on <story/sso>`
+  Authentication and identification of the user should happen only once when she
+  begins the session. Moving between services should be seamless.
+
+:doc:`Using learning materials <story/learning_materials>`
+  User must be able to use any material the way she wants.
+
+:doc:`Procurement and license management <story/procurement>`
+  Procurement of material and services should be easy and
+  fair to everybody.
+
+:doc:`Curriculum <story/curriculum>`
+  User should always know that what she is doing is in line with the curriculum.
+
+:doc:`Analytics and feedback loops <story/feedback_loops>`
+  User should see her progress in real time and it must be possible to
+  build feedback loops in all levels of the system.
+
+
+Services
+========
+
+The standard is based on a service oriented architecture where functionality
+is split to services. The services defined in the standard are implementing
+the stories defined in the standard.
+
+The standard must be accompanied by reference implementation which shows in practice
+how the standard is meant to be working.
+The reference implementation is not meant to be production system and it is
+not designed as such.
+
+It must be possible to have multiple instances of all services when in production.
+It is up to the production system to define how many instances of
+different services are available to the users.
+
+.. image:: services.png
 
 User authentication, identification and profile data
 ----------------------------------------------------
 
-All other services need to know something about the user. Different services
+Authentication is considered separate from other services.
+All services need to know something about the user. Different services
 need different data about the user, but all of them need to authenticate and/or
-identify the user.
+identify the user in some way.
 
-:doc:`Auth Source <auth/index>`
-  Authenticates the user when the user wants to open a session in one of the
-  services. Auth Sources are handled by the Auth Proxy.
+These are the services which together form the basis of :doc:`authentication and
+identification <auth/index>` of users.
 
-:doc:`Auth Proxy <auth/index>`
+:doc:`Auth Proxy <auth/proxy/index>`
   Common interface for services to use different Auth Sources.
   Provides single sign-on for services.
 
-:doc:`Connector <connector/index>`
+:doc:`Auth Source <auth/source>`
+  Authenticates the user when the user wants to open a session in one of the
+  services. Auth Sources are handled by the Auth Proxy.
+
+:doc:`Connector <auth/connector/index>`
   Connects user authentication source and user identity together.
   This makes it possible for the user to identify with multiple
   authentication sources and still have only one identity.
   Only the authentication source knows the credentials for the user.
 
-:doc:`Data <data/index>`
+:doc:`Data <auth/data/index>`
   Common source of user data to all other services.
   Mainly used by the connector to query users and store
   the connection between authentication source and user identity.
 
 
-:doc:`Authentication attributes study <auth/auth_study>`, and first proposal for
-authentication attributes.
-  
-
 Learning material
 -----------------
 
+Handling learning material is focused in three key service types.
 Learning material is produced by the :term:`CMS` and used in the :term:`LMS`.
+Bazaar is mediating between them and allowing many-to-many connections
+freely between them.
 
 :doc:`Bazaar <bazaar/index>`
   Service which lets the user to browse and buy material from :term:`CMS` to :term:`LMS`.
+
+:doc:`Recipes <recipes/index>`
+  Service which builds collections of learning materials.
+
+:doc:`Learning management system <lms/index>`
+  Service which consumes the content produced by the :doc:`Content management systems <cms/index>`.
+
+:doc:`Content management system <cms/index>`
+  Service which produces content in some form.
 
 
 Interfaces
 ==========
 
-* What interfaces are needed for achieving the goals and the standard?
-* What level are the interfaces described?
+The interfaces can be thought of as a highway of information which is flowing between
+services.
 
-<Here is an image>
+.. image:: bus.png
 
-:doc:`Auth IF <auth/interface>`
+Services are publishing interfaces for other services to use.
+Interface definitions must be open to everybody, but the use and authorization
+of interface access is defined runtime by the services.
+
+Services may have more interfaces than what is defined in the standard.
+These interfaces are not bound by the standard.
+
+
+:doc:`Auth IF <auth/proxy/interface>`
   User authentication is done by common interface.
   The auth system has :term:`SP` and :term:`IdP` components.
 
-:doc:`Data IF <data/interface>`
+:doc:`Data IF <auth/data/interface>`
   Data Service provides an interface to query for user data from Data Providers.
 
 :doc:`LMS IF <bazaar/interface>`
-  Between :term:`Bazaar` and :term:`LMS`.
+  Between :doc:`Bazaar <bazaar/index>` and :doc:`LMS <lms/index>`.
 
 :doc:`CMS IF <bazaar/interface>`
-  Between term:`Bazaar` and :term:`CMS`.
+  Between :doc:`Bazaar <bazaar/index>` and :doc:`CMS <cms/index>`.
+
+
+Infrastructure
+==============
+
+The standard would not be complete without defining how the system as a whole
+is working and how the reference implementation is built. The production
+system can be different.
+
 
 Contributions
 =============
 
+If you want to contribute to ECA put your contributions in the
+open and begin the discussion how your contribution could benefit
+ECA and everybody else.
 
 Read more about :doc:`contributions <contributions>`.
+
 

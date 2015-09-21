@@ -14,14 +14,14 @@ Glossary
     Interface. Similar to :term:`API` but between term:`service<services>` and operates over Internet.
 
   Bazaar
-    The marketplace service.
+    :doc:`The marketplace service <bazaar/index>`.
 
   CMS
-    Content Management System, a place which produces content for
+    :doc:`Content Management System <cms/index>`, a place which produces content for
     the user to consume.
 
   LMS
-    Learning Management System, a place which consumes the content
+    :doc:`Learning Management System <lms/index>`, a place which consumes the content
     produced by the :term:`CMS`.
 
   Service

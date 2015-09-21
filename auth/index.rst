@@ -4,33 +4,18 @@ Authentication
 
 .. toctree::
 
-  interface
-  auth_study
+  proxy/index
+  data/index
+  connector/index
+  source
 
-EduCloud Auth's central component is called Auth Proxy (IdP)
-that is the main gateway between Service Providers (SPs)
-and Authentication Providers (APs).
-Proxy IdP hides the varying technologies of multiple APs behind one standard interface from SPs' perspective:
-regardless of the AP, Proxy IdP returns the authenticated user's OID ("oppija ID" in Finnish) for the SP.
+Auth services provide other services user authentication and identification information.
 
-The SPs can request authentication and attributes from Proxy IdP solely using the (front-channel) SAML 2.0 Web SSO Profile.
+The central component is the :doc:`Auth Proxy <proxy/index>` which has
+the :doc:`authentication interface <proxy/interface>`.
+Auth Proxy works as a proxy between services and authentication sources.
+:doc:`Auth Sources <source>` have the actual user identity information and
+perform the credential checks.
 
-User attributes can be queried from the Data Service.
-
-<Image of relationships between the services>
-
-<Image of sequence diagram of authentication flow>
-
-Data as SAML attributes
-=======================
-
-Data coming from Data Service should be directly visible to all service providers as SAML attributes.
-There are two attributes:
-
-educloud.oid
-  This is same as the username field in the API.
-
-educloud.data
-  Contains whole JSON document coming from the API. It is base64 encoded.
-
+User attributes can be queried from the :doc:`Auth Data service <data/index>`.
 
