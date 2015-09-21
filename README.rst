@@ -4,8 +4,6 @@ Educloud Alliance Technical Documentation
 
 |gitter| |docs|
 
-[![Join the chat at https://gitter.im/educloudalliance/eca-docs](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/educloudalliance/eca-docs?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
 
 Educloud Alliance is creating a standard architecture how different service providers
 can communicate and share information. The system consists of mainly interface
@@ -49,5 +47,5 @@ Don't hesitate to open pull requests, or raise issues :)
 .. |docs| image:: https://readthedocs.org/projects/educloud-alliance-technical-documentation/badge/?version=latest
   :alt: Documentation Status
   :scale: 100%
-  :target: https://docs.educloudalliance.org/
+  :target: http://docs.educloudalliance.org/
 
