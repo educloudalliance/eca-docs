@@ -213,6 +213,19 @@ freely between them.
   Service which produces content in some form.
 
 
+Meta
+----
+
+These are the services which together form the basis of metadata and analytics.
+:doc:`Collection, storing and delivering metadata <meta/index>` about everything in the system.
+
+:doc:`Meta Data <meta/data/index>`
+  Service which stores and delivers metadata between services.
+
+:doc:`Meta Analytics <meta/analytics/index>`
+  Service which analyzes the metadata stored by the Meta Data service.
+
+
 Interfaces
 ==========
 
@@ -241,6 +254,9 @@ These interfaces are not bound by the standard.
 
 :doc:`CMS IF <bazaar/interface>`
   Between :doc:`Bazaar <bazaar/index>` and :doc:`CMS <cms/index>`.
+
+:doc:`Meta IF <meta/data/interface>`
+  Data Service provides an interface to query for user data from Data Providers.
 
 
 Infrastructure
