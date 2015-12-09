@@ -1,38 +1,39 @@
-Bazaar CMS Interface 
-=========================
+Bazaar CMS Interface
+********************
 
-This interface is used for adding material to the Bazaar and viewing material through the Bazaar. You must also bundle your material to a product.
-One product is made of one or more materials. There is also one endpointfor viewing material. 
+This interface is used for adding material to the Bazaar and viewing material through the Bazaar.
+There is also one endpoint for viewing material.
 
 CMS interface endpoints in this document:
 
 =====================  ====== ======================================================================
 ENDPOINT               METHOD DESCRIPTION
 =====================  ====== ======================================================================
-cms/materials          GET    Returns your materials   
-cms/materials          POST   Create a material 
+cms/materials          GET    Returns your materials
+cms/materials          POST   Create a material
 cms/materials/<uid>    PUT    Update a material
 cms/materials/<uid>    GET    Get material
-cms/materials<uid>     DELETE Delete material 
+cms/materials<uid>     DELETE Delete material
 cms/metadata           GET    Return all available metedata that can be added to the material.
 cms/products           POST   Create a product.
 cms/products/<uid>     PUT    Update product information.
-cms/products/<uid>     GET    Get product information 
+cms/products/<uid>     GET    Get product information
 cms/validate/<token>   GET    For viewing material. Get and validate view token. Returns user and resource data.
 =====================  ====== ======================================================================
 
 
-Authentication 
+Authentication
 ==============
 
-Authentication to the API occurs via HMAC256 hash token. Hash token is calculated from the JSON payload and your secret key. You can get your client_id and API secret key from the Bazaar. 
+Authentication to the API occurs via HMAC256 hash token.
+Hash token is calculated from the JSON payload and your secret key.
+You can get your client_id and API secret key from the Bazaar administrator.
 
 All API requests must be made over HTTPS. Requests made over plain HTTP will fail.
 
-To make authenticated request to the Bazaar LMS api, you need to generate hash token and put authentication headers to your request.
+To make authenticated request to the Bazaar LMS API, you need to generate hash token and put authentication headers to your request.
 
-
-How to generate Authentication headers:: 
+Form of Authentication headers::
 
     Authentication = 'BAZAAR' + ' ' + client_id + ':' + calculated hash token
 
@@ -48,15 +49,13 @@ Hash token calculation example(Python 2.7)::
     header = "CMS" + ' ' + client_id + ':' + hmac.new(secret_key, message, digestmod=hashlib.sha256).hexdigest();
     print(header)
 
+Example output::
 
-Python hash token calculation example output::
-
-    $ python test.py 
+    $ python test.py
     CMS example_client:8a5c839290690a145fc8f128aec4fba0970a004a230fad856d775ea7b528da80
 
+Example authenticated Bazaar LMS request::
 
-Example authenticated Bazaar LMS request:: 
-   
    GET cms/token HTTP/1.1
    Host: bazaar.gov
    Date: Mon, 3 Jul 2015 12:00:52 +0300
@@ -65,7 +64,7 @@ Example authenticated Bazaar LMS request::
    {"first_name":"Teppo","last_name":"Testaaja","email":"Teppo","user_id":123,"context_id":123,"context_title":"DETAILS","role":"student","school":"Koulu","school_id":1235,"city":"Helsinki","city_id":"0123456-7","oid":null,"add_resource_callback_url":"","cancel_callback_url":""}
 
 
-Possible response codes 
+Possible response codes
 =======================
 
 ================ ===================
@@ -77,9 +76,62 @@ HTTP CODE        DESCRIPTION
 ================ ===================
 
 
+Metadata and tags
+=================
+
+Metadata is built up by country, so first part of the metadata item always indicates country.
+Metadata might have translations in other languages in some countries, but you can also use translated metadata.
+Use ``metadata`` endpoints to receive all available metadatas or parts of it.
+
+Metadata is a hierarchical data structure where each level is delimited with ``/`` character.
+
+Tags are extra information about the material and you can create them as you wish.
+
+
+Get metadata
+------------
+
+Metadata is flat map of pre-defined metadata.
+There is also namespace *global* for global metadata mapping.
+Normally it is more user friendly to use country specific metadata,
+but if your material is designed to work globally, you can also use *global* metadatas.
+
+=======================  ====== ======================================
+ENDPOINT                 METHOD DESCRIPTION
+=======================  ====== ======================================
+cms/metadata             GET    Returns all available metadata.
+cms/metadata/<country>   GET    Returns all available metadata by country
+=======================  ====== ======================================
+
+
+REQUEST::
+
+    GET cms/metadata HTTP/1.1
+    Host: bazaar.gov
+    Date: Mon, 3 Jul 2015 12:00:52 +0300
+    Authentication: CMS example_client:8a5c839290690a145fc8f128aec4fba0970a004a230fad856d775ea7b528da80
+
+
+RESPONSE::
+
+    {
+        "success" : 1,
+        "data" : [
+            "fi/Kouluaste/1.luokka",
+            "fi/Kouluaste/2.luokka",
+            "fi/Kouluaste/3.luokka",
+            "fi/Kouluaste/4.luokka",
+            "fi/Kouluaste/5.luokka",
+            "fi/Kouluaste/6.luokka",
+            "fi/Kouluaste/7.luokka",
+            "fi/Kouluaste/7.luokka",
+            "global/Subject/Biology"
+        ]
+    }
+
 
 Create, read, update and delete material
-========================================================
+========================================
 
 You can create, read, update and delete your material with these actions.
 
@@ -93,7 +145,7 @@ cms/materials         GET    Return materials
 cms/materials         POST   Create material
 cms/materials/<uid>   PUT    Update material
 cms/materials/<uid>   GET    Get material
-cms/materials/<uid>   DELETE Delete material 
+cms/materials/<uid>   DELETE Delete material
 ====================  ====== ================================
 
 
@@ -107,22 +159,15 @@ description            required               Description (max. 2048 chars)
 language               required               Material language
 publisher_resource_id  required,unique        Publisher unique material id (in your system)
 publisher_data                                Publisher additional data
-metadata                                      Metadata in array format. Max 32 items. You must first get available metadatas with *cms/metadata*. 
-tags                                          Material tags max 32 items. Max length of a tag is 64. 
-images                                        Assoc array of images. See example below above.
+metadata                                      Metadata in array format. Max 32 items. You must first get available metadatas with *cms/metadata*.
+tags                                          Material tags max 32 items. Max length of a tag is 64.
+images                                        Assoc array of images. See example.
 ====================== =====================  ================================
 
-publisher_resource_id must be unique in your CMS, so you cannot have multiple materials with the same id. 
-
-Metadata and tags
------------------
-
-Metadata is build up by country, so first part of the metadata item always indicates country. Metadata might have translations in other languages in some countries, but you can also use translated metadata. Use *metadata* endpoints to receive all available metadatas or parts of it.
-
-Tags are extra information about the material and you can create them as you wish.
+publisher_resource_id must be unique in your CMS, so you cannot have multiple materials with the same id.
 
 Example material
-------------------
+----------------
 
 
 Example material data::
@@ -162,13 +207,13 @@ Example material data::
     }
 
 
+Get materials
+-------------
 
-
-Get materials 
-========================================
-
-Returns material stored in Bazaar. API returns max. 100 items at time. You can use pagination to get more sequential data. Call url in the next_url param to 
-get next set of data.
+Returns material stored in Bazaar.
+API returns max. 100 items at time.
+You can use pagination to get more sequential data.
+Call URL in the next_URL param to get next set of data.
 
 ====================  ====== ================================
 ENDPOINT              METHOD DESCRIPTION
@@ -185,26 +230,25 @@ REQUEST::
     Authentication: CMS example_client:8a5c839290690a145fc8f128aec4fba0970a004a230fad856d775ea7b528da80
 
 
-
 RESPONSE::
-    
+
     {
-        "count" : 1  
-        "data" : [{
-            "name":         "Bazaar example",
-            "description":  "Bazaar example material.",
-            "language"  : "fi-FI",
-            "publisher_resource_id" : "123123123"
-            "publisher_url" : "https:\/\/",
+        "count": 1
+        "data": [{
+            "name": "Bazaar example",
+            "description": "Bazaar example material.",
+            "language": "fi-FI",
+            "publisher_resource_id": "123123123"
+            "publisher_url": "https:\/\/",
             "metadata": [
                 "Kouluaste/1. Luokka",
                 "Kouluaste/2. Luokka",
                 "Kouluaste/2. Luokka",
                 "Oppiaine/Biologia",
             ],
-            "tags" : ['Tag 1', 'Tags 2'],
+            "tags": ['Tag 1', 'Tags 2'],
 
-            "images" : {
+            "images": {
                 "thumbnail": {
                     "url": "https:\/\/bazaard.gov\/img\/thumb.jpg",
                     "width": 150,
@@ -223,16 +267,14 @@ RESPONSE::
             }
         }],
 
-        "pagination" : {
-           "next_url" : "cms/materials?start=100",
+        "pagination": {
+           "next_url": "cms/materials?start=100",
         }
     }
 
 
-Create or update material
----------------------------
-
-Create or update material. Check material params table from above.
+Create material
+---------------
 
 To create a resource make following request:
 
@@ -244,18 +286,18 @@ REQUEST::
     Authentication: CMS example_client:8a5c839290690a145fc8f128aec4fba0970a004a230fad856d775ea7b528da80
 
     {
-        "name":         "Bazaar example",
-        "description":  "Bazaar example material.",
-        "language"  : "fi-FI",
-        "publisher_resource_id" : "123123123"
-        "publisher_url" : "https:\/\/",
+        "name": "Bazaar example",
+        "description": "Bazaar example material.",
+        "language": "fi-FI",
+        "publisher_resource_id": "123123123"
+        "publisher_url": "https:\/\/",
         "metadata": [
             "fi/Kouluaste/1. Luokka.",
             "fi/Kouluaste/2. Luokka.",
             "fi/Kouluaste/2. Luokka.",
         ],
-        "tags" : ['Asiasana', 'Asiasana2'],
-        "images" : {
+        "tags": ['Asiasana', 'Asiasana2'],
+        "images": {
             "thumbnail": {
                 "url": "https:\/\/bazaar.gov\/img\/thumb.jpg",
                 "width": 150,
@@ -278,89 +320,17 @@ REQUEST::
 RESPONSE::
 
     {
-        "success" : 1
-        "resource_uid" : "eb5b7565-a3b9-487a-92ef-ed6f86976299"
+        "success": 1
+        "resource_uid": "eb5b7565-a3b9-487a-92ef-ed6f86976299"
     }
 
 
+Viewing material
+================
 
-**Update** is similar like create, but with PUT method. 
-
-
-Metadata
-===========
-
-Metadata is flat map of pre-defined metadata. There is also namespace *global* for global metadata mapping. Normally it is more user friendly to use country specific metadata, but if your material is designed to work globally, you can also use *global* metadatas.
-
-=======================  ====== ======================================
-ENDPOINT                 METHOD DESCRIPTION
-=======================  ====== ======================================
-cms/metadata             GET    Returns all available metadata.
-cms/metadata/<country>   GET    Returns all available metadata by country
-=======================  ====== ======================================
-
-
-REQUEST::
-
-    GET cms/metadata HTTP/1.1
-    Host: bazaar.gov
-    Date: Mon, 3 Jul 2015 12:00:52 +0300
-    Authentication: CMS example_client:8a5c839290690a145fc8f128aec4fba0970a004a230fad856d775ea7b528da80
-
-
-RESPONSE::
-
-    {
-        "success" : 1,
-        "data" : [
-            "fi/Kouluaste/1.luokka",
-            "fi/Kouluaste/2.luokka",
-            "fi/Kouluaste/3.luokka",
-            "fi/Kouluaste/4.luokka",
-            "fi/Kouluaste/5.luokka",
-            "fi/Kouluaste/6.luokka",
-            "fi/Kouluaste/7.luokka",
-            "fi/Kouluaste/7.luokka",
-            "global/Subject/Biology"
-        ]
-    }
-
-
-
-
-
-Create and update products(to be included or not?) 
-======================================================
-
-You must bundle your material to usable product. Product is bundled from one or more materials. LMS users buy products, but use materials.
-
-
-====================  ========= ================================
-ENDPOINT              METHOD    DESCRIPTION
-====================  ========= ================================
-cms/products            POST    Create a product.
-cms/products/<uid>      PUT     Update product information.
-cms/products/<uid>      GET     Get bundle information 
-cms/products/<uid>      DELETE  Delete product bundle information 
-====================  ========= ================================
-
-
-REQUEST::
-
-    GET cms/products HTTP/1.1
-    Host: bazaar.gov
-    Date: Mon, 3 Jul 2015 12:00:52 +0300
-    Authentication: CMS example_client:8a5c839290690a145fc8f128aec4fba0970a004a230fad856d775ea7b528da80
-
-
-...to be included or not...?
-
-
-Viewing material  
-======================
-
-
-User is redirected to your CMS with unique Bazaar token. You must validate Bazaar view token from Bazaar with *cms/validate/<token>* Rest API call. One token can only be validated once. 401 Unauthorized is return if token is timeout. 
+User is redirected to your CMS with unique Bazaar token.
+You must validate Bazaar view token from Bazaar with ``cms/validate/<token>`` Rest API call.
+One token can only be validated once. The API returns ``401 Unauthorized`` if the token is expired.
 
 =======================  ====== ======================================
 ENDPOINT                 METHOD DESCRIPTION
@@ -370,7 +340,7 @@ cms/validate/<token>     GET    For viewing material. Get and validate view toke
 
 
 Token timeout example response
--------------------------------
+------------------------------
 
 Bazaar has 1 minute timeout from the creation of the token.
 
@@ -380,9 +350,7 @@ TIMEOUT RESPONSE::
         "success" : 0,
         "error" : 401,
         "error_message" : "Token timeout"
-     }
-
-
+    }
 
 USED TOKEN RESPONSE::
 
@@ -390,14 +358,8 @@ USED TOKEN RESPONSE::
         "success" : 0,
         "error" : 401,
         "error_message" : "Token already used"
-     }
+    }
 
-
-
-
-**Insert some webdiagram here.**
-
-LMS -> Bazaar ->  CMS -> validate token from Bazaar -> handle user/redirect magic. 
 
 REQUEST::
 
@@ -454,25 +416,25 @@ email                    Email of the user.
 user_id                  User id from the LMS.
 context_id               Context id from the LMS.
 context_title            Context title from the LMS.
-role                     User role. admin, teacher or student 
+role                     User role. admin, teacher or student
 school                   School's name.
 school_id                School id
-city                     City name 
+city                     City name
 city_id                  City ID
-oid                      Student ID   
+oid                      Student ID
 country                  Country code(ISO 3166-1 alpha-2)
 language                 Language code (ISO 639-1)
 
 instance_id              Globally uniqe instance ID from the Bazaar.
-bazaar_user_id           Globally unique Bazaar user ID  
+bazaar_user_id           Globally unique Bazaar user ID
 bazaar_context_id        Globally unique Bazaar context ID
 
 resource_uid             Bazaar resource ID
 publisher_material_id    CMS material link #1
 resource_url             CMS material link #2
-organization_name        User organization nanme  
+organization_name        User organization nanme
 organization_id          User organization ID in the Bazaard
-history_id               Unique history ID of this transaction  
+history_id               Unique history ID of this transaction
 =======================  ================================
 
 

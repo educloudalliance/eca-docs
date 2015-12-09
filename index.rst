@@ -236,10 +236,10 @@ These interfaces are not bound by the standard.
 :doc:`Data IF <auth/data/interface>`
   Data Service provides an interface to query for user data from Data Providers.
 
-:doc:`LMS IF <bazaar/interface>`
+:doc:`LMS IF <bazaar/interface_lms>`
   Between :doc:`Bazaar <bazaar/index>` and :doc:`LMS <lms/index>`.
 
-:doc:`CMS IF <bazaar/interface>`
+:doc:`CMS IF <bazaar/interface_cms>`
   Between :doc:`Bazaar <bazaar/index>` and :doc:`CMS <cms/index>`.
 
 
